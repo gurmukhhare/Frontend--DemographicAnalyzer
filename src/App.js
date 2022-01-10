@@ -9,11 +9,12 @@ import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import SignIn from './components/SignIn/SignIn';
 import Register from './components/Register/Register';
 
-
+//configure Clarifai API using provided key
 const app = new Clarifai.App({
  apiKey: '098ca16998ad4b0c8f5f66317ccacecc'
 });
 
+//initialize app state
 const initialState ={
         input: '',
         imageUrl:'',
@@ -51,6 +52,7 @@ class App extends Component {
 			}
 
 	}
+
   loadUser=(data)=>{
     this.setState({user:{
       id: data.id,
@@ -63,8 +65,10 @@ class App extends Component {
   }
 
 
-
+  //determine coordinations for facial recognition displau boy
   calculateFaceLocation =(data)=>{
+
+    //extracting data from response provided by Clarifia API
     const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
     const image = document.getElementById('inputimage');
     const width = Number(image.width);
@@ -72,6 +76,7 @@ class App extends Component {
     const clarifaiAge =data.outputs[0].data.regions[0].data.concepts[0].name;
     const clarifaiGender =data.outputs[0].data.regions[0].data.concepts[20].name;
     const clarifaiCultural = data.outputs[0].data.regions[0].data.concepts[22].name;
+
     return {
       leftCol: clarifaiFace.left_col * width,
       topRow: clarifaiFace.top_row * height,
@@ -84,13 +89,15 @@ class App extends Component {
 
   }
 
+  //show prediction result to user and siaply facial recognition box
   displayFaceBox =(box) => {
     console.log(box);
-    //console.log(box.Age,box.CulturalAppearance,box.Gender)
     alert(`I have detected that you are a ${box.CulturalAppearance} ${box.Age} year old with a ${box.Gender} facial structure`);
     this.setState({box: box});
   }
 
+
+  //callback methods to listen for events triggered by user interaction
 	onInputChange = (event)=>{
 		this.setState({input: event.target.value});
 	}
@@ -117,13 +124,6 @@ class App extends Component {
       this.displayFaceBox(this.calculateFaceLocation(response))
     })
       .catch(err => console.log(err));
-      // app.models.predict(Clarifai.DEMOGRAPHICS_MODEL, this.state.input)
-      // .then(function(response){
-      //   console.log(response);
-      // },
-      // function(err){
-      // }
-      // );
   }
 
   onRouteChange =(route) =>{
