@@ -61,7 +61,7 @@ class App extends Component {
   }
 
 
-  //determine coordinations for facial recognition displau boy
+  //determine coordinates for facial recognition display box
   calculateFaceLocation =(data)=>{
 
     //extracting data from response provided by Clarifia API
