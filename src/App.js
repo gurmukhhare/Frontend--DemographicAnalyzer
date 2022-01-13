@@ -16,42 +16,38 @@ const app = new Clarifai.App({
 
 //initialize app state
 const initialState ={
-        input: '',
-        imageUrl:'',
-        box: {},
-        route: 'signin',
-        isSignedIn: false,
-        user:{
-          id: '',
-          name: '',
-          email: '',
-          entries:0 ,
-          joined: ''
-        }
-
+    input: '',
+    imageUrl:'',
+    box: {},
+    route: 'signin',
+    isSignedIn: false,
+    user:{
+        id: '',
+        name: '',
+        email: '',
+        entries:0 ,
+        joined: ''
+    }
 }
 
 class App extends Component {
-	constructor(){
-		super();
-			this.state = {
-				input: '',
-				imageUrl:'',
-        box: {},
-        route: 'signin',
-        isSignedIn: false,
-        user:{
-          id: '',
-          name: '',
-          email: '',
-          entries:0 ,
-          joined: ''
+    constructor(){
+        super();
+        this.state = {
+            input: '',
+            imageUrl:'',
+            box: {},
+            route: 'signin',
+            isSignedIn: false,
+            user:{
+                id: '',
+                name: '',
+                email: '',
+                entries:0 ,
+                joined: ''
+            }
         }
-
-        
-			}
-
-	}
+    }
 
   loadUser=(data)=>{
     this.setState({user:{
@@ -98,14 +94,14 @@ class App extends Component {
 
 
   //callback methods to listen for events triggered by user interaction
-	onInputChange = (event)=>{
-		this.setState({input: event.target.value});
-	}
+    onInputChange = (event)=>{
+        this.setState({input: event.target.value});
+    }
 
-	onButtonSubmit =() =>{
-		this.setState({imageUrl: this.state.input});
+    onButtonSubmit =() =>{
+        this.setState({imageUrl: this.state.input});
 
-		app.models.predict(Clarifai.DEMOGRAPHICS_MODEL, this.state.input)
+        app.models.predict(Clarifai.DEMOGRAPHICS_MODEL, this.state.input)
     .then(response => {
       if (response){
         fetch('https://shielded-dawn-72708.herokuapp.com/image',{
@@ -136,7 +132,7 @@ class App extends Component {
 
   }
           
-    			
+                
 
 
 
